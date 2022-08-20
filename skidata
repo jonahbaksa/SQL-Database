@@ -1,0 +1,109 @@
+-- This is the skidata table.
+create table skidata
+(ResortID varchar(50),
+Resort varchar(50),
+State varchar(50),
+Distance int,
+Elevation int,
+Vertical int,
+Trails int,
+Acres int,
+Lifts varchar(50),
+Nightskiing varchar(50))
+
+-- This is the skihotel table.
+create table skihotel
+(ResortID varchar(50),
+Hotel varchar(50),
+Price int,
+Rating decimal(2,1),
+Pool varchar(50),
+Breakfast varchar(50))
+
+-- This inserts values into the skidata table.
+insert into skidata values
+('BE', 'Berkshire East', 'MA', 275, 1700, 1180, 45, 200, 'Yes', 'Yes'),
+('BLME', 'Black Mountain of Maine', 'ME', 497, 2300, 1380, 35, 600, 'No', 'Yes'),
+('BLNH', 'Black Mountain of New Hampshire', 'NH', 478, 3303, 1100, 45, 143, 'Yes', 'No'),
+('BL', 'Blue Knob', 'PA', 178, 3146, 1072, 34, 83, 'No', 'Yes'),
+('BO', 'Bolton Valley', 'VT', 377, 3150, 1704, 71, 300, 'Yes', 'Yes'),
+('CAN', 'Cannon Mountain', 'NH', 410, 4080, 2180, 73, 285, 'Yes', 'Yes'),
+('CAT', 'Catamount', 'NY', 210, 2000, 1000, 43, 119, 'No', 'Yes'),
+('GR', 'Greek Peak', 'NY', 135, 2200, 952, 55, 220, 'No', 'Yes'),
+('JA', 'Jay Peak', 'VT', 456, 3968, 2153, 81, 385, 'Yes', 'Yes'),
+('MA', 'Magic Mountain', 'VT', 293, 2850, 1500, 39, 205, 'No', 'No'),
+('MOH', 'Mohawk Mountain', 'CT', 189, 1600, 650, 25, 107, 'No', 'Yes'),
+('MON', 'Montage Mountain', 'PA', 40, 1960, 1000, 27, 140, 'No', 'Yes'),
+('PA', 'Pats Peak', 'NH', 385, 1460, 770, 28, 103, 'No', 'Yes'),
+('SA', 'Saddleback', 'ME', 545, 4120, 2000, 68, 600, 'Yes', 'No'),
+('SH', 'Shawnee', 'PA', 61, 1351, 700, 23, 125, 'No', 'Yes'),
+('SK', 'Ski Sawmill', 'PA', 104, 2215, 515, 13, 50, 'No', 'Yes'),
+('SN', 'Snow Ridge', 'NY', 242, 1850, 500, 31, 130, 'Yes', 'No'),
+('SU', 'Suicide Six', 'VT', 334, 1200, 650, 23, 100, 'No', 'No'),
+('SW', 'Swain', 'NY', 199, 1970, 650, 35, 120, 'No', 'Yes'),
+('TI', 'Titus Mountain', 'NY', 358, 2025, 1200, 36, 200, 'No', 'Yes'),
+('WA', 'Waterville Valley', 'NH', 429, 4004, 2020, 62, 265, 'Yes', 'Yes'),
+('WE', 'West Mountain', 'NY', 270, 1470, 1010, 31, 126, 'No', 'Yes')
+
+-- This inserts values into the skihotel table.
+insert into skihotel values
+('BE', 'Berkshire East Mountain Resort', 172, 4.7, 'Yes', 'Yes'),
+('BLME', 'Boardwalk Inn', 128, 4.2, 'No', 'Yes'),
+('BLNH', 'Swiss Chalets Village Inn', 109, 3.9, 'Yes', 'Yes'),
+('BL', 'Holiday Inn Altoona', 139, 4.6, 'Yes', 'Yes'),
+('BO', 'Inn at Bolton Valley', 128, 4.2, 'Yes', 'Yes'),
+('CAN', 'Hampton Inn Littleton', 214, 4.4, 'Yes', 'Yes'),
+('CAT', 'Catamount Moutain Resort', 225, 4.5, 'No', 'No'),
+('GR', 'Greek Peak Mountain Resort', 369, 4.4, 'Yes', 'Yes'),
+('JA', 'Jay Peak Resort', 282, 4.5, 'Yes', 'Yes'),
+('MA', 'Blue Gentian Lodge', 169, 4.7, 'Yes', 'Yes'),
+('MOH', 'The Litchfield Inn', 206, 4.5, 'No', 'Yes'),
+('MON', 'Hampton Inn Scranton', 129, 4.2, 'Yes', 'Yes'),
+('PA', 'Henniker Motel', 129, 4.1, 'Yes', 'No'),
+('SA', 'Rangeley Saddleback Inn', 180, 4.6, 'Yes', 'Yes'),
+('SH', 'The Shawnee Inn and Golf Resort', 129, 4.0, 'Yes', 'Yes'),
+('SK', 'The South Mountain Inn', 189, 5.0, 'No', 'Yes'),
+('SN', 'Myers Bed and Breakfast', 128, 4.7, 'No', 'Yes'),
+('SU', 'Quality Inn Quechee Gorge', 131, 4.2, 'Yes', 'Yes'),
+('SW', 'Trainside Inn', 79, 4.1, 'No', 'No'),
+('TI', 'Red Roof Plus Malone', 95, 4.5, 'No', 'Yes'),
+('WA', 'The Valley Inn Ascend Hotel Collection', 122, 4.3, 'Yes', 'Yes'),
+('WE', 'Holiday Inn Express & Suites Queensbury', 116, 4.6, 'Yes', 'Yes')
+
+
+-- These show each table with ski resort data for Indy Passholders on the East Coast.
+select * from skidata
+select * from skihotel
+
+-- Which resort has the highest elevation?
+select Resort, Elevation from skidata where elevation = (select max(elevation) from skidata)
+
+-- Which resorts have night skiing?
+select Resort, Nightskiing from skidata where nightskiing = 'Yes'
+
+-- Which resorts are in Vermont and have over 1,000 ft vertical drop?
+select Resort, State, Vertical from skidata where state = 'VT'and vertical > 1000
+
+-- Arrange the New Hampshire ski resorts from highest to lowest by trail count.
+select Resort, State, Trails from skidata where state = 'NH' order by trails desc
+
+-- How many ski resorts are from each state?
+select State, count(*) as Total from skidata group by State order by State asc
+
+-- How many ski resorts are from New York?
+select count(*) as Total from skidata where state = 'NY'
+
+-- What's the name of the hotel closest to Cannon Mountain?
+select skidata.Resort, skihotel.Hotel from skidata
+inner join skihotel on skidata.ResortID = skihotel.ResortID
+where skidata.resort = 'Cannon mountain'
+
+-- Whcih resorts have a pool availabe with a vertical drop of over 1200 ft?
+select skidata.Resort, skidata.Vertical, skihotel.Pool from skidata 
+inner join skihotel on skidata.ResortID = skihotel.ResortID 
+where skidata.vertical > 1200 and skihotel.Pool = 'Yes'
+
+-- Which resorts are over 400 miles away that include a hotel with breakfast?
+select skidata.Resort, skidata.Distance, skihotel.Breakfast from skidata
+inner join skihotel on skidata.ResortID = skihotel.ResortID
+where skidata.distance > 400 and skihotel.breakfast = 'Yes'
